@@ -1,9 +1,10 @@
-<script>
-
+<script setup>
+import ButtonPageHeader from '../ui/buttons/ButtonPageHeader.vue'
 </script>
 
 <template>
-    <div className="w-[10rem] bg-slate-500 h-screen self-center">
-        <div className="text-black">test</div>
-    </div>
+  <div className="w-screen h-[80px] bg-white items-center flex px-[76px] py-[28px] justify-between">
+    <img alt="logo" src="../../assets/images/redberrylogo.png" className="w-[150px] h-[24px]" />
+    <ButtonPageHeader />
+  </div>
 </template>
