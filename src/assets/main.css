@@ -4,8 +4,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: #f3f2fa;
-  scroll-behavior: none;
-  overflow: hidden;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   display: flex;
