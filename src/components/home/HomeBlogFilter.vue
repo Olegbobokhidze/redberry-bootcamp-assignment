@@ -19,24 +19,21 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { getToken, setAuthToken } from '../../services/api.js'
+import { fetchCategories } from '../../services/api.js';
 
 export default {
   data() {
     return {
-      categories: []
-    }
+      categories: [],
+    };
   },
   async mounted() {
     try {
-      const token = await getToken()
-      setAuthToken(token)
-      const response = await axios.get('https://api.blog.redberryinternship.ge/api/categories')
-      this.categories = response.data.data
+      this.categories = await fetchCategories();
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error:', error);
     }
-  }
-}
+  },
+};
 </script>
+
