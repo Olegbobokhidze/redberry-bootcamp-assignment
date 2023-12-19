@@ -3,7 +3,7 @@ import axios from 'axios'
 const apiUrl = 'https://api.blog.redberryinternship.ge/api'
 
 
-export async function getToken() {
+export const getToken = async () => {
   try {
     const response = await axios.get(`${apiUrl}/token`)
     return response.data.token
@@ -14,7 +14,7 @@ export async function getToken() {
 }
 
 
-export function setAuthToken(token) {
+export const setAuthToken = async (token) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
 
@@ -29,3 +29,16 @@ export const fetchCategories = async () => {
     throw error; 
   }
 };
+
+export const fetchBlogs = async () => {
+  try {
+    const token = await getToken();
+    setAuthToken(token);
+    const response = await axios.get('https://api.blog.redberryinternship.ge/api/blogs');
+    console.log(response.data);
+    return response.data.data;
+  }catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
