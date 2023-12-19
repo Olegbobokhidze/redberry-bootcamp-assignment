@@ -8,5 +8,6 @@ import BlogCard from '../components/blog/BlogCard.vue'
   <div class="px-[76px] w-full">
     <HomeHero />
     <HomeBlogFilter />
+    <BlogCard />
   </div>
 </template>
