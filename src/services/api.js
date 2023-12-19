@@ -17,3 +17,15 @@ export async function getToken() {
 export function setAuthToken(token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
+
+export const fetchCategories = async () => {
+  try {
+    const token = await getToken();
+    setAuthToken(token);
+    const response = await axios.get('https://api.blog.redberryinternship.ge/api/categories');
+    return response.data.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error; 
+  }
+};
