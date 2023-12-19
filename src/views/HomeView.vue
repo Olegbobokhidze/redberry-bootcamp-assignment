@@ -5,7 +5,7 @@ import BlogCard from '../components/blog/BlogCard.vue'
 </script>
 
 <template>
-  <div className="px-[76px] w-full">
+  <div class="px-[76px] w-full">
     <HomeHero />
     <HomeBlogFilter />
   </div>
