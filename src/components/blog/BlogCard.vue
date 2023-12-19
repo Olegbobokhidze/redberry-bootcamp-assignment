@@ -12,7 +12,13 @@
       <div>category1</div>
     </div>
     <p class="text-[#404049]">Description</p>
+    <div class="text-[#5D37F3] cursor-pointer flex">
+      <p class="font-bold">სრულად ნახვა</p>
+      <IconFullView />
+    </div>
   </div>
 </template>
 
-<script></script>
+<script setup>
+import IconFullView from '../icons/IconFullView.vue'
+</script>
