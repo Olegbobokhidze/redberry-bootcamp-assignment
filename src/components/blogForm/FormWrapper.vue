@@ -1,6 +1,10 @@
 <template>
-    <div></div>
+    <div>
+        <InputAuthor/>
+    </div>
 </template>
 
-<script>
+<script setup>
+import InputAuthor from '../ui/inputs/blogFormInputs/InputAuthor.vue';
+
 </script>
