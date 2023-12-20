@@ -19,6 +19,5 @@
   </div>
 </template>
 
-<script setup>
-import IconFullView from '../icons/IconFullView.vue'
+<script >
 </script>
