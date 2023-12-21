@@ -3,10 +3,14 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as zod from 'zod'
 import InputAuthor from '../ui/inputs/blogFormInputs/InputAuthor.vue'
-
+import InputTitle from '../ui/inputs/blogFormInputs/InputTitle.vue';
+import InputDescription from '../ui/inputs/blogFormInputs/InputDescription.vue';
+import InputDate from '../ui/inputs/blogFormInputs/InputDate.vue';
+import InputCategory from '../ui/inputs/blogFormInputs/InputCategory.vue';
+import InputEmail from '../ui/inputs/blogFormInputs/InputEmail.vue';
 const validationSchema = toTypedSchema(
   zod.object({
-    email: zod.string().email().nonempty().endsWith('უნდა მთავრდებოდეს @redberry.ge'),
+    email: zod.string().email().nonempty().endsWith('@redberry.ge'),
     description: zod.string().min(4, { message: 'მინიმუმ 4 სიმბოლო' }).nonempty(),
     title: zod.string().min(4, { message: 'მინიმუმ 4 სიმბოლო' }).nonempty(),
     author: zod.string().min(4, { message: 'მინიმუმ 4 სიმბოლო' }).nonempty().refine((value) => {
@@ -35,14 +39,18 @@ const [category, categoryProps] = defineField('category')
     <h1 class="text-[32px] self-start text-[#1A1A1F] font-bold">ბლოგის დამატება</h1>
     <div class="flex gap-6">
       <InputAuthor name="author" type="author" title="* ავტორი" placeholder="შეიყვანეთ ავტორი" />
-      <InputAuthor name="title" type="title" title="* სათაური" placeholder="შეიყვანეთ სათაური" />
+      <InputTitle name="title" type="title" title="* სათაური" placeholder="შეიყვანეთ სათაური" />
     </div>
-    <InputAuthor
+    <InputDescription
       name="description"
       type="description"
       title="* აღწერა"
-      placeholder="შეიყვანეთ სათაური"
+      placeholder="შეიყვანეთ აღწერა"
     />
-    <InputAuthor name="email" type="email" title="* ელ-ფოსტა" placeholder="Example@redberry.ge" />
+    <div class="flex gap-6">
+      <InputDate name="date" type="date" title="* თარიღი" placeholder="შეიყვანეთ თარიღი" />
+      <InputCategory name="category" type="category" title="* კატეგორია" placeholder="შეიყვანეთ კატეგორია" />
+    </div>
+    <InputEmail name="email" type="email" title="* ელ-ფოსტა" placeholder="Example@redberry.ge" />
   </div>
 </template>
