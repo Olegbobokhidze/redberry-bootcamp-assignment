@@ -8,6 +8,7 @@ import InputDescription from '../ui/inputs/blogFormInputs/InputDescription.vue';
 import InputDate from '../ui/inputs/blogFormInputs/InputDate.vue';
 import InputCategory from '../ui/inputs/blogFormInputs/InputCategory.vue';
 import InputEmail from '../ui/inputs/blogFormInputs/InputEmail.vue';
+import InputImage from '../ui/inputs/blogFormInputs/InputImage.vue';
 const validationSchema = toTypedSchema(
   zod.object({
     email: zod.string().email().nonempty().endsWith('@redberry.ge'),
@@ -37,6 +38,7 @@ const [category, categoryProps] = defineField('category')
 <template>
   <div class="text-black flex gap-6 flex-col justify-center items-center w-[600px]">
     <h1 class="text-[32px] self-start text-[#1A1A1F] font-bold">ბლოგის დამატება</h1>
+    <InputImage />
     <div class="flex gap-6">
       <InputAuthor name="author" type="author" title="* ავტორი" placeholder="შეიყვანეთ ავტორი" />
       <InputTitle name="title" type="title" title="* სათაური" placeholder="შეიყვანეთ სათაური" />
