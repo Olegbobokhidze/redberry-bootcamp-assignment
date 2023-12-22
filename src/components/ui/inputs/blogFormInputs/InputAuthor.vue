@@ -44,7 +44,7 @@ const minLengthRule = computed(
 )
 const wordCountRule = computed(
   () =>
-    (value.value || '').trim().split(/\s+/).length >= 2 ||
+    (typeof value.value === 'string' ? value.value.trim().split(/\s+/).length >= 2 : false) ||
     value.value === '' ||
     value.value === undefined
 )

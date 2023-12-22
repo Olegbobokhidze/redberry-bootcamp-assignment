@@ -13,7 +13,7 @@
       ]"
       @blur="wasTouched = true"
     />
-    <p :class="endsWithClass">{{ endsWithMessage }}</p>
+    <p :class="validationClass">{{ validationMessage }}</p>
   </div>
 </template>
 
@@ -37,14 +37,22 @@ const onInput = (event) => {
 
 const isInvalid = computed(() => errorMessage.value !== undefined)
 
-const minLengthRule = computed(
-  () => (value.value || '').length >= 4 || value.value === '' || value.value === undefined
-)
-// გასაკეთებელია
-const endsWithClass = computed(() => ({
-  'text-gray-500': minLengthRule.value,
-  'text-red-500': !minLengthRule.value && wasTouched
+const endsWithRedberryRule = computed(() => {
+    if(value.value !== undefined) {
+        return value.value.endsWith('@redberry.ge') || value.value === ''
+    }
+  return false
+})
+
+const validationClass = computed(() => ({
+  'text-gray-500': endsWithRedberryRule.value,
+  'text-red-500': !endsWithRedberryRule.value && wasTouched.value
 }))
 
-const endsWithMessage = computed(() => 'უნდა მთავრდებოდეს @redberry.ge')
+const validationMessage = computed(() => {
+  if (!endsWithRedberryRule.value) {
+    return 'ელ-ფოსტა უნდა მთავრდებოდეს @redberry.ge'
+  }
+  return ''
+})
 </script>
