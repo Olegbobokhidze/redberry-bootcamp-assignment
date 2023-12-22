@@ -1,5 +1,4 @@
 <template>
-
   <div
     v-if="imageValue"
     class="bg-[#E4E3EB] w-[600px] h-[56px] border rounded-xl flex items-center justify-between p-4"
@@ -8,7 +7,12 @@
       <IconImageAdded />
       <p>BlogImg.png</p>
     </div>
-    <div>washla</div>
+    <div
+      @click="deleteImg"
+      class="cursor-pointer flex items-center justify-center hover:bg-[#F5F4F9] rounded-[50%] w-[40px] h-[40px]"
+    >
+      <IconRemove />
+    </div>
   </div>
   <div
     v-else
@@ -33,6 +37,7 @@ import { ref } from 'vue'
 import { useField } from 'vee-validate'
 import IconImageAdd from '@/components/icons/IconImageAdd.vue'
 import IconImageAdded from '@/components/icons/IconImageAdded.vue'
+import IconRemove from '@/components/icons/IconRemove.vue'
 
 export default {
   name: 'InputImage',
@@ -69,6 +74,9 @@ export default {
       isDragOver.value = false
       handleImageChange(event)
     }
+    const deleteImg = () => {
+      imageValue.value = ''
+    }
     return {
       imageValue,
       fileInput,
@@ -76,9 +84,10 @@ export default {
       handleImageChange,
       handleDrop,
       dragOver,
+      deleteImg,
       dragLeave
     }
   },
-  components: { IconImageAdd, IconImageAdded }
+  components: { IconImageAdd, IconImageAdded, IconRemove }
 }
 </script>

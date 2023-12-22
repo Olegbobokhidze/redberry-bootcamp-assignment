@@ -27,9 +27,9 @@ const validationSchema = toTypedSchema(
           message: 'მინიმუმ 2 სიტყვა'
         }
       ),
-    date: zod.any(),
+    date: zod.date(),
     category: zod.any(),
-    image: zod.any()
+    image: zod.string().nonempty()
   })
 )
 const { values, errors, defineField, handleSubmit } = useForm({
