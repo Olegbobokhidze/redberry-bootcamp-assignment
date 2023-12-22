@@ -2,15 +2,16 @@ import axios from 'axios'
 
 const apiUrl = 'https://api.blog.redberryinternship.ge/api'
 
-export const getToken = async () => {
-  try {
-    const response = await axios.get(`${apiUrl}/token`)
-    return response.data.token
-  } catch (error) {
-    console.error('Error fetching token:', error)
-    throw error
-  }
-}
+// export const getToken = async () => {
+//   try {
+//     const response = await axios.get(`${apiUrl}/token`)
+//     return response.data.token
+//   } catch (error) {
+//     console.error('Error fetching token:', error)
+//     throw error
+//   }
+// }
+const token = 'c6ccf285bfe578ab4976014965972a8dd038d2aecdc2dbd1f8d07dfdab19578d'
 
 export const setAuthToken = async (token) => {
   try {
@@ -23,7 +24,7 @@ export const setAuthToken = async (token) => {
 
 export const fetchCategories = async () => {
   try {
-    const token = await getToken()
+    // const token = await getToken()
     setAuthToken(token)
     const response = await axios.get(`${apiUrl}/categories`)
     return response.data.data
@@ -35,12 +36,12 @@ export const fetchCategories = async () => {
 
 export const fetchBlogs = async () => {
   try {
-    const token = await getToken()
+    // const token = await getToken()
     setAuthToken(token)
     const response = await axios.get(`${apiUrl}/blogs`)
     console.log('Response Status:', response.status)
-    console.log(response.data)
-    return response.data
+    console.log(response.data.data)
+    return response.data.data
   } catch (error) {
     console.error('Error fetching blogs:', error)
     throw error
@@ -49,7 +50,7 @@ export const fetchBlogs = async () => {
 
 export const postBlog = async (blogData) => {
   try {
-    const token = await getToken()
+    // const token = await getToken()
     setAuthToken(token)
     const response = await axios.post(`${apiUrl}/blogs`, blogData, {
       headers: {
