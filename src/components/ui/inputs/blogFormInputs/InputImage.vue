@@ -1,5 +1,17 @@
 <template>
+
   <div
+    v-if="imageValue"
+    class="bg-[#E4E3EB] w-[600px] h-[56px] border rounded-xl flex items-center justify-between p-4"
+  >
+    <div class="flex gap-3 items-center justify-center">
+      <IconImageAdded />
+      <p>BlogImg.png</p>
+    </div>
+    <div>washla</div>
+  </div>
+  <div
+    v-else
     @click="triggerFileInput"
     @dragover.prevent="dragOver"
     @dragleave.prevent="dragLeave"
@@ -11,13 +23,7 @@
       <p class="text-sm text-[#1A1A1F] mt-2">
         ჩააგდეთ ფაილი აქ ან <span class="font-bold text-[#1A1A1F] underline">აირჩიეთ ფაილი</span>
       </p>
-      <input
-        type="file"
-        class="hidden"
-        @change="handleImageChange"
-        ref="fileInput"
-      />
-      <img :src="imageValue" />
+      <input type="file" class="hidden" @change="handleImageChange" ref="fileInput" />
     </div>
   </div>
 </template>
@@ -26,17 +32,15 @@
 import { ref } from 'vue'
 import { useField } from 'vee-validate'
 import IconImageAdd from '@/components/icons/IconImageAdd.vue'
+import IconImageAdded from '@/components/icons/IconImageAdded.vue'
 
 export default {
   name: 'InputImage',
   props: {
-    image: {
-      type: Object,
-      required: true
-    }
+    name: String
   },
   setup(props) {
-    const { value: imageValue } = useField('image')
+    const { value: imageValue } = useField(props.name)
     const isDragOver = ref(false)
 
     const fileInput = ref(null)
@@ -53,11 +57,11 @@ export default {
         }
       }
     }
-    const dragOver = (event) => {
+    const dragOver = () => {
       isDragOver.value = true
     }
 
-    const dragLeave = (event) => {
+    const dragLeave = () => {
       isDragOver.value = false
     }
 
@@ -75,6 +79,6 @@ export default {
       dragLeave
     }
   },
-  components: { IconImageAdd }
+  components: { IconImageAdd, IconImageAdded }
 }
 </script>

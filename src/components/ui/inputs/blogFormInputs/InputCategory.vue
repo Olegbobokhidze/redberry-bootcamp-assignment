@@ -4,12 +4,10 @@
     <select
       v-model="value"
       @input="onInput"
-      :type="type || 'text'"
       :placeholder="placeholder"
       :class="[
         'rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F] ',
         'focus:outline-none focus:border-[#5D37F3] bg-[#F7F7FF]',
-        { 'border-gray-300': !isInvalid, 'border-red-500 bg-[#FAF2F3]': isInvalid && wasTouched }
       ]"
       @blur="wasTouched = true"
     >
@@ -30,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useField } from 'vee-validate'
 import { fetchCategories } from '../../../../services/api.js'
 
@@ -41,14 +39,12 @@ const props = defineProps({
   placeholder: String
 })
 
-const { value, errorMessage } = useField(props.name)
+const { value } = useField(props.name)
 const wasTouched = ref(false)
 
 const onInput = (event) => {
   value.value = event.target.value
 }
-
-const isInvalid = computed(() => errorMessage.value !== undefined)
 
 const categories = ref([])
 

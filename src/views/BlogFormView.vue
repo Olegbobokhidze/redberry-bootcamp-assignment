@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex justify-center relative px-[76px] py-[40px]">
+  <div class="w-full flex justify-center relative px-[76px] py-[33px]">
     <div
       class="w-[44px] h-[44px] cursor-pointer left-[76px] absolute rounded-[50%] bg-[#E4E3EB] hover:bg-[#D9D8E0] flex items-center justify-center "
     >
