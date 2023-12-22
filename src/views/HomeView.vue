@@ -1,13 +1,13 @@
 <script setup>
 import HomeHero from '../components/home/HomeHero.vue'
 import HomeBlogFilter from '../components/home/HomeBlogFilter.vue'
-import BlogCard from '../components/blog/BlogCard.vue'
+import BlogList from '@/components/blog/BlogList.vue';
 </script>
 
 <template>
-  <div class="px-[76px] w-full">
+  <div class="px-[76px] w-full pb-[66px]">
     <HomeHero />
     <HomeBlogFilter />
-    <BlogCard />
+    <BlogList />
   </div>
 </template>

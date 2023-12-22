@@ -51,7 +51,7 @@ const onSubmit = handleSubmit((values) => {
       <button
         type="button"
         @click="onSubmit"
-        class="enabled:bg-[#5D37F3] disabled:bg-[#E4E3EB] self-end mt-[40px] w-[288px] text-white mb-[237px] h-[40px] rounded-lg"
+        class="enabled:bg-[#5D37F3] enabled:hover:bg-[#512BE7] disabled:bg-[#E4E3EB] self-end mt-[40px] w-[288px] text-white mb-[237px] h-[40px] rounded-lg"
       >
         გამოქვეყნება
       </button>
