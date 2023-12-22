@@ -1,7 +1,5 @@
 <script setup>
 import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
-import * as zod from 'zod'
 import InputAuthor from '../ui/inputs/blogFormInputs/InputAuthor.vue'
 import InputTitle from '../ui/inputs/blogFormInputs/InputTitle.vue'
 import InputDescription from '../ui/inputs/blogFormInputs/InputDescription.vue'
@@ -9,29 +7,7 @@ import InputDate from '../ui/inputs/blogFormInputs/InputDate.vue'
 import InputCategory from '../ui/inputs/blogFormInputs/InputCategory.vue'
 import InputEmail from '../ui/inputs/blogFormInputs/InputEmail.vue'
 import InputImage from '../ui/inputs/blogFormInputs/InputImage.vue'
-const validationSchema = toTypedSchema(
-  zod.object({
-    email: zod.string().email().nonempty().endsWith('@redberry.ge'),
-    description: zod.string().min(4).nonempty(),
-    title: zod.string().min(4).nonempty(),
-    author: zod
-      .string()
-      .min(4, { message: 'მინიმუმ 4 სიმბოლო' })
-      .nonempty()
-      .refine(
-        (value) => {
-          const words = value.trim().split(' ')
-          return words.length === 2
-        },
-        {
-          message: 'მინიმუმ 2 სიტყვა'
-        }
-      ),
-    date: zod.date(),
-    category: zod.any(),
-    image: zod.string().nonempty()
-  })
-)
+import { validationSchema } from './validationSchema/blogFormSchema.js'
 const { values, errors, defineField, handleSubmit } = useForm({
   validationSchema
 })
