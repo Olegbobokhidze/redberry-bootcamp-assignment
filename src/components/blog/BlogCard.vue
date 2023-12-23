@@ -22,25 +22,31 @@
       </div>
     </div>
     <p class="text-[#404049] text-[16px] line-clamp-2">{{ blog.description }}.</p>
-    <div class="text-[#5D37F3] hover:text-[#512BE7] cursor-pointer flex">
+    <div
+      class="text-[#5D37F3] hover:text-[#512BE7] cursor-pointer flex"
+      @click="goToBlogDetail(blog.id)"
+    >
       <p class="font-bold">სრულად ნახვა</p>
       <IconFullView />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useRouter } from 'vue-router'
 import IconFullView from '../icons/IconFullView.vue'
+import { defineProps } from 'vue'
 
-export default {
-  components: {
-    IconFullView
-  },
-  props: {
-    blog: {
-      type: Object,
-      required: true
-    }
+const props = defineProps({
+  blog: {
+    type: Object,
+    required: true
   }
+})
+
+const router = useRouter()
+
+const goToBlogDetail = (blogId) => {
+  router.push({ name: 'Blog', params: { id: blogId } })
 }
 </script>
