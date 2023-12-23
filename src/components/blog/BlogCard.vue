@@ -3,7 +3,7 @@
     <img :src="blog.image" :alt="blog.title" class="w-full h-[328px] rounded-lg" />
     <div class="flex flex-col gap-3">
       <h2 class="font-bold text-[16px] text-[#1A1A1F]">{{ blog.author }}</h2>
-      <h3 class="text-[#85858D] font-bold text-[12px]">{{ blog.date }}</h3>
+      <h3 class="text-[#85858D] font-bold text-[12px]">{{ blog.publish_date }}</h3>
     </div>
     <h1 class="text-[#1A1A1F] font-bold text-[20px]">{{ blog.title }}</h1>
     <div
