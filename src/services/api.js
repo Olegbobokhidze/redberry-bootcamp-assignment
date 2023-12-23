@@ -47,6 +47,19 @@ export const fetchBlogs = async () => {
     throw error
   }
 }
+export const fetchSingleBlog = async (id) => {
+  try {
+    // const token = await getToken()
+    setAuthToken(token)
+    const response = await axios.get(`${apiUrl}/blogs/${id}`)
+    console.log('Response Status:', response.status)
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching blogs:', error)
+    throw error
+  }
+}
 
 export const postBlog = async (blogData) => {
   try {
