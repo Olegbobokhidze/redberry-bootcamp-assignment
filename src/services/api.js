@@ -95,8 +95,11 @@ export const authenticateWithEmail = async (email) => {
     console.log(response.data)
 
     if (response.status === 204) {
+
       console.log('User logged in successfully')
-      return true
+      console.log(response.data.token)
+
+      return { success: true };
     } else {
       console.error('Unexpected response status:', response.status)
       throw new Error('Unexpected response status')
