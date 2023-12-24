@@ -5,6 +5,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { ref, onMounted, watch } from 'vue'
 import { useBlogStore } from '../../stores/BlogStore.js'
