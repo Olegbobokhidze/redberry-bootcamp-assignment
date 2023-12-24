@@ -17,13 +17,15 @@ export const useBlogStore = defineStore('blog', {
       this.categories = categories
     },
 
-    filterBlogsByCategory(categoryId) {
-      if (categoryId === null) {
-        this.filteredBlogs = this.blogs
+    filterBlogsByCategory(selectedCategories) {
+      if (selectedCategories.length === 0) {
+        this.filteredBlogs = this.blogs;
       } else {
-        this.filteredBlogs = this.blogs.filter((blog) =>
-          blog.categories.some((category) => category.id === categoryId)
-        )
+        this.filteredBlogs = this.blogs.filter((blog) => {
+          return blog.categories.some((category) =>
+            selectedCategories.includes(category.id)
+          );
+        });
       }
     }
   }
