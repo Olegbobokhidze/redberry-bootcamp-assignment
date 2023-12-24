@@ -5,7 +5,9 @@
         v-for="category in categories"
         :key="category.id"
         @click="toggleCategory(category.id)"
-        :class="{ 'border-4': selectedCategories.includes(category.id) }"
+        :class="{
+          'h-[31px] border-2 border-neutral-950': selectedCategories.includes(category.id)
+        }"
         class="rounded-[30px] h-[30px] px-[16px] py-[8px] flex items-center justify-center font-bold hover:opacity-[75%] cursor-pointer"
         :style="{
           color: category.text_color,
@@ -30,14 +32,23 @@ export default {
     const selectedCategories = ref([])
 
     const toggleCategory = (categoryId) => {
-      const index = selectedCategories.value.indexOf(categoryId)
-      if (index === -1) {
-        selectedCategories.value.push(categoryId)
-      } else {
-        selectedCategories.value.splice(index, 1)
-      }
+      try {
+        const index = selectedCategories.value.indexOf(categoryId)
+        if (index === -1) {
+          selectedCategories.value.push(categoryId)
+        } else {
+          selectedCategories.value.splice(index, 1)
+        }
 
-      blogStore.filterBlogsByCategory(selectedCategories.value)
+        blogStore.filterBlogsByCategory(selectedCategories.value)
+        if (selectedCategories.value.length === 0) {
+          localStorage.removeItem('selectedCategories')
+        } else {
+          localStorage.setItem('selectedCategories', JSON.stringify(selectedCategories.value))
+        }
+      } catch (error) {
+        console.error('Error toggling category:', error)
+      }
     }
 
     watch(
@@ -46,16 +57,25 @@ export default {
         categories.value = newCategories
       }
     )
+    
 
     onMounted(async () => {
       try {
+        // Load selected categories from local storage
+        const storedCategories = localStorage.getItem('selectedCategories')
+        selectedCategories.value = storedCategories ? JSON.parse(storedCategories) : []
+
         const fetchedCategories = await fetchCategories()
         blogStore.setCategories(fetchedCategories)
+
+        // If there are selected categories, filter blogs
+        if (selectedCategories.value.length > 0) {
+          blogStore.filterBlogsByCategory(selectedCategories.value)
+        }
       } catch (error) {
         console.error('Error:', error)
       }
     })
-
     return {
       categories,
       selectedCategories,

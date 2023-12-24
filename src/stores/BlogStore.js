@@ -4,7 +4,8 @@ export const useBlogStore = defineStore('blog', {
   state: () => ({
     blogs: [],
     filteredBlogs: [],
-    categories: [] 
+    categories: [],
+    filteredBlogIds: []
   }),
 
   actions: {
@@ -18,14 +19,31 @@ export const useBlogStore = defineStore('blog', {
     },
 
     filterBlogsByCategory(selectedCategories) {
-      if (selectedCategories.length === 0) {
-        this.filteredBlogs = this.blogs;
-      } else {
-        this.filteredBlogs = this.blogs.filter((blog) => {
-          return blog.categories.some((category) =>
-            selectedCategories.includes(category.id)
-          );
-        });
+      try {
+        if (selectedCategories.length === 0) {
+          // If no categories are selected, include all blogs
+          this.filteredBlogIds = this.blogs.map((blog) => blog.id)
+        } else {
+          // Filter blogs based on selected categories
+          this.filteredBlogIds = this.blogs.reduce((ids, blog) => {
+            const hasCategory = blog.categories.some((category) =>
+              selectedCategories.includes(category.id)
+            )
+
+            if (hasCategory) {
+              ids.push(blog.id)
+            }
+
+            return ids
+          }, [])
+        }
+        if(this.filteredBlogIds.length === 0 && !selectedCategories) {
+          this.filteredBlogIds = this.blogs.map((blog) => blog.id)
+          this.filteredBlogs = this.blogs
+        }
+        this.filteredBlogs = this.blogs.filter((blog) => this.filteredBlogIds.includes(blog.id))
+      } catch (error) {
+        console.error('Error filtering blogs:', error)
       }
     }
   }
