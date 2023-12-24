@@ -83,3 +83,26 @@ export const postBlog = async (blogData) => {
     }
   }
 }
+export const authenticateWithEmail = async (email) => {
+  try {
+    setAuthToken(token)
+
+    const response = await axios.post(`${apiUrl}/login`, {
+      email: email
+    })
+
+    console.log('Response Status:', response.status)
+    console.log(response.data)
+
+    if (response.status === 204) {
+      console.log('User logged in successfully')
+      return true
+    } else {
+      console.error('Unexpected response status:', response.status)
+      throw new Error('Unexpected response status')
+    }
+  } catch (error) {
+    console.error('Error during email authentication:', error)
+    throw error
+  }
+}
