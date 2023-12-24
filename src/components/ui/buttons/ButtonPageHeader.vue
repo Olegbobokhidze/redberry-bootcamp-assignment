@@ -22,6 +22,7 @@ export default {
   setup() {
     const store = useModalStore()
     const authStore = useAuthStore()
+    authStore.initializeFromLocalStorage()
     const openModal = () => {
       store.openModal()
     }
