@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import BlogView from '../views/BlogView.vue' 
 import BlogFormView from '../views/BlogFormView.vue'
+import { useAuthStore } from '@/stores/AuthStore'
 
 const routes = [
   {
@@ -18,7 +19,14 @@ const routes = [
   {
     path: '/post-blog',
     name: 'PostBlog',
-    component: BlogFormView
+    component: BlogFormView,
+    beforeEnter: (to, from, next) => {
+      if (useAuthStore.isAuthenticated) {
+        next(); // Allow access
+      } else {
+        next('/');
+      }
+    }
   }
 ]
 
