@@ -9,7 +9,7 @@
 <script setup>
 import IconArrowLeft from '@/components/icons/IconArrowLeft.vue'
 import { defineProps } from 'vue'
-const props = defineProps({
+defineProps({
   route: {
     type: String,
     required: true

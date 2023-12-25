@@ -65,7 +65,7 @@ import { useRouter } from 'vue-router'
 import IconFullView from '../icons/IconFullView.vue'
 import { computed, defineProps } from 'vue'
 
-const props = defineProps({
+defineProps({
   blog: {
     type: Object,
     required: true
@@ -75,7 +75,6 @@ const router = useRouter()
 const onBlogPage = computed(() => router.currentRoute.value.name === 'Blog')
 const onHomePage = computed(() => router.currentRoute.value.name === 'Home')
 
-console.log(onBlogPage)
 const goToBlogDetail = (blogId) => {
   router.push({ name: 'Blog', params: { id: blogId } })
 }
