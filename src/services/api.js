@@ -39,8 +39,6 @@ export const fetchBlogs = async () => {
     // const token = await getToken()
     setAuthToken(token)
     const response = await axios.get(`${apiUrl}/blogs`)
-    console.log('Response Status:', response.status)
-    console.log(response.data.data)
     return response.data.data
   } catch (error) {
     console.error('Error fetching blogs:', error)
@@ -52,8 +50,6 @@ export const fetchSingleBlog = async (id) => {
     // const token = await getToken()
     setAuthToken(token)
     const response = await axios.get(`${apiUrl}/blogs/${id}`)
-    console.log('Response Status:', response.status)
-    console.log(response.data)
     return response.data
   } catch (error) {
     console.error('Error fetching blogs:', error)
