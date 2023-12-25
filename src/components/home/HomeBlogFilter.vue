@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-7 gap-5 mt-[64px]">
+    <div class="flex flex-wrap gap-5 px-[250px]  mt-[64px] items-center justify-center">
       <div
         v-for="category in categories"
         :key="category.id"
@@ -8,7 +8,7 @@
         :class="{
           'h-[31px] border-2 border-neutral-950': selectedCategories.includes(category.id)
         }"
-        class="rounded-[30px] h-[30px] px-[16px] py-[8px] flex items-center justify-center font-bold hover:opacity-[75%] cursor-pointer"
+        class="rounded-[30px] h-[30px] w-fit px-[16px] py-[8px] flex items-center justify-center font-bold hover:opacity-[75%] cursor-pointer"
         :style="{
           color: category.text_color,
           backgroundColor: category.background_color
