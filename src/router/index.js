@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import BlogView from '../views/BlogView.vue' 
+import BlogView from '../views/BlogView.vue'
 import BlogFormView from '../views/BlogFormView.vue'
-import { useAuthStore } from '@/stores/AuthStore'
-
+import { watchEffect } from 'vue'
 const routes = [
   {
     path: '/',
@@ -11,21 +10,24 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/blog/:id', 
+    path: '/blog/:id',
     name: 'Blog',
     component: BlogView,
-    props: true 
+    props: true
   },
   {
     path: '/post-blog',
     name: 'PostBlog',
     component: BlogFormView,
     beforeEnter: (to, from, next) => {
-      if (useAuthStore.isAuthenticated) {
-        next(); // Allow access
-      } else {
-        next('/');
-      }
+      watchEffect(() => {
+        const authData = localStorage.getItem('auth')
+        if (!authData) {
+          next('/')
+        } else {
+          next()
+        }
+      })
     }
   }
 ]

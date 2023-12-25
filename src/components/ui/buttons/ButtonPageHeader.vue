@@ -17,6 +17,7 @@
 <script>
 import { useAuthStore } from '@/stores/AuthStore'
 import { useModalStore } from '@/stores/ModalStore'
+import {  useRouter } from 'vue-router'
 
 export default {
   setup() {
@@ -31,6 +32,6 @@ export default {
       openModal,
       authStore
     }
-  }
+  },
 }
 </script>
