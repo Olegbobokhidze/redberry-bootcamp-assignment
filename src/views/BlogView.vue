@@ -12,7 +12,7 @@
 import BlogCard from '@/components/blog/BlogCard.vue'
 import RouteNavigator from '@/components/shared/RouteNavigator.vue'
 import { fetchBlogs, fetchSingleBlog } from '@/services/api'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import RelatedBlogsCarousel from '@/components/blog/carousel/RelatedBlogsCarousel.vue'
 import { useBlogStore } from '@/stores/BlogStore'
