@@ -21,7 +21,7 @@
       class="flex flex-row gap-10"
       :style="{ transform: 'translateX(' + -currentIndex * (530 + 40) + 'px)' }"
     >
-      <BlogCard v-for="(blog, index) in props.blogs" :key="index" :blog="blog" class="w-[530px]" />
+      <BlogCard v-for="(blog, index) in props.blogs" :key="index" :blog="blog" type="carousel" />
     </div>
   </div>
 </template>
