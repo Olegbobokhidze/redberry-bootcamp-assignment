@@ -82,5 +82,6 @@ const onHomePage = computed(() => router.currentRoute.value.name === 'Home')
 const goToBlogDetail = (blogId) => {
   console.log(blogId)
   router.push({ name: 'Blog', params: { id: blogId } })
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>
