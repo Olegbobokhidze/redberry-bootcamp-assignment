@@ -20,7 +20,7 @@ export const validationSchema = toTypedSchema(
         }
       ),
     date: zod.any(),
-    category: zod.any(),
+    category: zod.array(zod.number()).nonempty(),
     image: zod.string().nonempty(),
   })
 );
