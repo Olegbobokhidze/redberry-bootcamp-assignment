@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useField } from 'vee-validate'
 
 const props = defineProps({
@@ -28,7 +28,7 @@ const props = defineProps({
   placeholder: String
 })
 
-const { value, errorMessage } = useField(props.name)
+const { value, errorMessage, setValue } = useField(props.name)
 const wasTouched = ref(false)
 
 const onInput = (event) => {
@@ -36,7 +36,16 @@ const onInput = (event) => {
 }
 
 const isInvalid = computed(() => errorMessage.value !== undefined)
-
+onMounted(() => {
+  const storedData = localStorage.getItem('blogFormData')
+  if (storedData) {
+    const formData = JSON.parse(storedData)
+    const email = formData.email
+    if (email !== undefined) {
+      setValue(email)
+    }
+  }
+})
 const endsWithRedberryRule = computed(() => {
     if(value.value !== undefined) {
         return value.value.endsWith('@redberry.ge') || value.value === ''
