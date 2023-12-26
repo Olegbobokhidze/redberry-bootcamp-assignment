@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-5 items-center justify-between ">
+  <div class="flex gap-5 items-center justify-between">
     <h3 class="text-[32px] font-bold text-[#1A1A1F]">მსგავსი სტატიები</h3>
     <div class="flex gap-6">
       <div
@@ -19,9 +19,9 @@
   <div class="flex max-w-[1768px] overflow-x-hidden m-0">
     <div
       class="flex flex-row gap-10"
-      :style="{ transform: 'translateX(' + -currentIndex * (538 + 40) + 'px)' }"
+      :style="{ transform: 'translateX(' + -currentIndex * (530 + 40) + 'px)' }"
     >
-      <BlogCard v-for="(blog, index) in props.blogs" :key="index" :blog="blog" class="w-[538px]" />
+      <BlogCard v-for="(blog, index) in props.blogs" :key="index" :blog="blog" class="w-[530px]" />
     </div>
   </div>
 </template>
