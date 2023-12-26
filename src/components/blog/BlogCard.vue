@@ -2,7 +2,8 @@
   <div
     :class="{
       'flex flex-col w-[408px] gap-6 mt-5': onHomePage,
-      'flex flex-col w-[720px] gap-6 mt-5': onBlogPage
+      'flex flex-col w-[720px] gap-6 mt-5': onBlogPage && type !== 'carousel',
+      'flex flex-col w-[530px] gap-6 mt-5': onBlogPage && type === 'carousel'
     }"
     :key="blog.id"
   >
@@ -50,7 +51,7 @@
     </p>
 
     <div
-      v-if="onHomePage"
+      v-if="onHomePage || type === 'carousel'"
       class="text-[#5D37F3] hover:text-[#512BE7] cursor-pointer flex"
       @click="goToBlogDetail(blog.id)"
     >
@@ -69,13 +70,17 @@ defineProps({
   blog: {
     type: Object,
     required: true
+  },
+  type: {
+    type: String,
+    default: ''
   }
 })
 const router = useRouter()
 const onBlogPage = computed(() => router.currentRoute.value.name === 'Blog')
 const onHomePage = computed(() => router.currentRoute.value.name === 'Home')
-
 const goToBlogDetail = (blogId) => {
+  console.log(blogId)
   router.push({ name: 'Blog', params: { id: blogId } })
 }
 </script>
