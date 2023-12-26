@@ -37,7 +37,6 @@ export default {
       try {
         const storedCategories = localStorage.getItem('selectedCategories')
         const storedFilteredBlogIds = localStorage.getItem('filteredBlogIds')
-        const filteredBlogIds = JSON.parse(storedFilteredBlogIds)
         const selectedCategories = JSON.parse(storedCategories)
         isLoading.value = true
         const blogs = await fetchBlogs()
@@ -46,11 +45,12 @@ export default {
         }
         if (storedCategories) {
           blogStore.filterBlogsByCategory(selectedCategories)
-        } else if (filteredBlogIds.length === 0) {
+        } else if (!storedFilteredBlogIds) {
           localStorage.setItem(
             'filteredBlogIds',
             JSON.stringify(blogStore.blogs.map((blog) => blog.id))
           )
+          blogStore.setBlogs(blogs)
         } else if (!storedCategories) {
           blogStore.setBlogs(blogs)
         }
