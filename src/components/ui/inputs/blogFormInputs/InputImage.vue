@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useField } from 'vee-validate'
 import IconImageAdd from '@/components/icons/IconImageAdd.vue'
 import IconImageAdded from '@/components/icons/IconImageAdded.vue'
@@ -45,9 +45,18 @@ export default {
     name: String
   },
   setup(props) {
-    const { value: imageValue } = useField(props.name)
+    const { value: imageValue, setValue} = useField(props.name)
     const isDragOver = ref(false)
-
+    onMounted(() => {
+      const storedData = localStorage.getItem('blogFormData')
+      if (storedData) {
+        const formData = JSON.parse(storedData)
+        const image = formData.image
+        if (image !== undefined) {
+          setValue(image)
+        }
+      }
+    })
     const fileInput = ref(null)
     const triggerFileInput = () => {
       fileInput.value.click()

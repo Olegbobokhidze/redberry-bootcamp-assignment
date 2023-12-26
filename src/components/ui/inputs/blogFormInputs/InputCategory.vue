@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { useField } from 'vee-validate'
 import { fetchCategories } from '../../../../services/api.js'
 
@@ -78,17 +78,45 @@ const props = defineProps({
   placeholder: String
 })
 
-const { value } = useField(props.name)
+const { value, setValue } = useField(props.name)
 const categories = ref([])
-const selectedCategories = ref([]) // Change ref to reactive
+const selectedCategories = ref([]) 
 const isDropdownOpen = ref(false)
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value
 }
-watch(selectedCategories, (newValue) => {
-  value.value = newValue.map((c) => c.id)
-  console.log()
+watchEffect(() => {
+  const storedData = localStorage.getItem('blogFormData')
+  if (storedData) {
+    const formData = JSON.parse(storedData)
+    const storedCategoryIds = formData.category
+
+    if (storedCategoryIds !== undefined) {
+      setValue(storedCategoryIds)
+
+      selectedCategories.value = categories.value.filter((category) =>
+        storedCategoryIds.includes(category.id)
+      )
+    }
+  }
+})
+
+onMounted(() => {
+  const storedData = localStorage.getItem('blogFormData')
+  if (storedData) {
+    const formData = JSON.parse(storedData)
+    const storedCategoryIds = formData.category
+
+    if (storedCategoryIds !== undefined) {
+      value.value = storedCategoryIds
+
+      selectedCategories.value = categories.value.filter((category) =>
+        storedCategoryIds.includes(category.id)
+      )
+
+    }
+  }
 })
 
 const toggleCategory = (category) => {

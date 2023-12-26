@@ -8,7 +8,8 @@ import InputCategory from '../ui/inputs/blogFormInputs/InputCategory.vue'
 import InputEmail from '../ui/inputs/blogFormInputs/InputEmail.vue'
 import InputImage from '../ui/inputs/blogFormInputs/InputImage.vue'
 import { validationSchema } from './validationSchema/blogFormSchema.js'
-const { values, errors, defineField, handleSubmit } = useForm({
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+const { values, defineField, handleSubmit } = useForm({
   validationSchema
 })
 const [email, emailProps] = defineField('email')
@@ -18,6 +19,29 @@ const [author, authorProps] = defineField('author')
 const [date, dateProps] = defineField('date')
 const [image, imageProps] = defineField('image')
 const [category, categoryProps] = defineField('category')
+const localStorageKey = 'blogFormData'
+const isDataLoaded = ref(false)
+
+onMounted(() => {
+  const storedData = localStorage.getItem(localStorageKey)
+  if (storedData) {
+    Object.assign(values, JSON.parse(storedData))
+  }
+  isDataLoaded.value = true
+})
+
+watch(values, (newValue) => {
+  if (isDataLoaded.value) {
+    localStorage.setItem(localStorageKey, JSON.stringify(newValue))
+  }
+})
+
+onBeforeUnmount(() => {
+  localStorage.setItem(localStorageKey, JSON.stringify(values))
+})
+
+console.log(localStorage.getItem(localStorageKey))
+console.log(values)
 const onSubmit = handleSubmit((values) => {
   console.log(values)
 })

@@ -16,6 +16,7 @@
 
 <script setup>
 import { useField } from 'vee-validate'
+import { onMounted } from 'vue';
 
 const props = defineProps({
   name: String,
@@ -24,8 +25,17 @@ const props = defineProps({
   placeholder: String
 })
 
-const { value } = useField(props.name)
-
+const { value, setValue } = useField(props.name)
+onMounted(() => {
+  const storedData = localStorage.getItem('blogFormData')
+  if (storedData) {
+    const formData = JSON.parse(storedData)
+    const date = formData.date
+    if (date !== undefined) {
+      setValue(date)
+    }
+  }
+})
 const onInput = (event) => {
   value.value = event.target.value
 }

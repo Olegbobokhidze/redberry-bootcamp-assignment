@@ -18,7 +18,7 @@
   </template>
   
   <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { useField } from 'vee-validate'
   
   const props = defineProps({
@@ -28,13 +28,22 @@
     placeholder: String
   })
   
-  const { value, errorMessage } = useField(props.name)
+  const { value, errorMessage, setValue } = useField(props.name)
   const wasTouched = ref(false)
   
   const onInput = (event) => {
     value.value = event.target.value
   }
-  
+  onMounted(() => {
+  const storedData = localStorage.getItem('blogFormData')
+  if (storedData) {
+    const formData = JSON.parse(storedData)
+    const desc = formData.description
+    if (desc !== undefined) {
+      setValue(desc)
+    }
+  }
+})
   const isInvalid = computed(() => errorMessage.value !== undefined)
   
   const minLengthRule = computed(

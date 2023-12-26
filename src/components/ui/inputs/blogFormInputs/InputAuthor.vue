@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useField } from 'vee-validate'
 
 const props = defineProps({
@@ -29,13 +29,23 @@ const props = defineProps({
   title: String,
   placeholder: String
 })
-
-const { value, errorMessage } = useField(props.name)
+const { value, errorMessage, setValue } = useField(props.name)
 const wasTouched = ref(false)
 
 const onInput = (event) => {
   value.value = event.target.value
 }
+
+onMounted(() => {
+  const storedData = localStorage.getItem('blogFormData')
+  if (storedData) {
+    const formData = JSON.parse(storedData)
+    const author = formData.author
+    if (author !== undefined) {
+      setValue(author)
+    }
+  }
+})
 
 const isInvalid = computed(() => errorMessage.value !== undefined)
 
