@@ -13,6 +13,10 @@
       <IconError />
       <p class="text-red-500">{{ validationMessage }}</p>
     </div>
+    <div v-if="props.error" class="flex gap-2">
+      <IconError />
+      <p class="text-red-500">ელფოსტა არ მოიძებნა</p>
+    </div>
   </div>
 </template>
 
@@ -21,15 +25,13 @@ import IconError from '@/components/icons/IconError.vue'
 import { useField } from 'vee-validate'
 import { computed, ref } from 'vue'
 
-const props = defineProps(['name', 'type', 'title', 'placeholder'])
+const props = defineProps(['name', 'type', 'title', 'placeholder', 'error'])
 
-const { value } = useField(props.name)
+const { value, errors, errorMessage } = useField(props.name)
 const wasTouched = ref(false)
-
 const onInput = (event) => {
   value.value = event.target.value
 }
-
 const endsWithRedberryRule = computed(() => {
   return value.value ? value.value.endsWith('@redberry.ge') : true
 })
@@ -39,12 +41,12 @@ const validationMessage = computed(() => {
 })
 
 const inputClasses = computed(() => [
-  'rounded-xl w-full h-[44px] border px-4 py-2 text-[#1A1A1F] outline-none focus:border-purple-500',
+  'rounded-xl w-full h-[44px] focus:bg-[#F7F7FF] border px-4 py-2 text-[#1A1A1F] outline-none focus:border-purple-500',
   {
     'border-gray-300': !wasTouched.value && endsWithRedberryRule.value,
     'border-red-500 focus:border-purple-500 bg-[#F7F7FF]':
-      wasTouched.value && !endsWithRedberryRule.value,
-    'border-red-500 bg-[#FAF2F3]': !wasTouched.value && !endsWithRedberryRule.value
+      (wasTouched.value && !endsWithRedberryRule.value) || props.error,
+    'border-red-500 bg-[#FAF2F3]': (!wasTouched.value && !endsWithRedberryRule.value) || props.error
   }
 ])
 
