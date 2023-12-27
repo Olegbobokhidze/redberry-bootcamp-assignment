@@ -67,6 +67,8 @@ export const postBlog = async (blogData) => {
         accept: 'application/json'
       }
     })
+    console.log(response.request)
+    console.log(blogData, "from api")
     console.log('Response Status:', response.status)
     return response.data
   } catch (error) {

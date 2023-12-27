@@ -6,7 +6,13 @@
     <div class="relative" @click="toggleDropdown">
       <div
         v-if="selectedCategories.length === 0"
-        class="flex flex-wrap items-center rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F] focus:outline-none target:border-[#5D37F3] focus:bg-[#5D37F3] bg-[#F9F9FA] cursor-pointer"
+        :class="[
+          'flex flex-wrap items-center rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F] outline-none  bg-[#F9F9FA] cursor-pointer',
+          {
+            'border-grey-500': selectedCategories.length === 0,
+            'border-green-500': selectedCategories.length > 0
+          }
+        ]"
       >
         <span
           v-for="selectedCategory in selectedCategories"
@@ -19,7 +25,7 @@
       </div>
       <div
         v-else
-        class="rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F] overflow-hidden flex flex-row focus:outline-none focus:border-[#5D37F3] bg-[#F7F7FF] cursor-pointer"
+        class="rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F] border-green-500 overflow-hidden flex flex-row outline-none bg-[#F7F7FF] cursor-pointer"
         style="position: relative"
       >
         <div
@@ -80,9 +86,8 @@ const props = defineProps({
 
 const { value, setValue } = useField(props.name)
 const categories = ref([])
-const selectedCategories = ref([]) 
+const selectedCategories = ref([])
 const isDropdownOpen = ref(false)
-
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value
 }
@@ -90,7 +95,7 @@ watchEffect(() => {
   const storedData = localStorage.getItem('blogFormData')
   if (storedData) {
     const formData = JSON.parse(storedData)
-    const storedCategoryIds = formData.category
+    const storedCategoryIds = formData.categories
 
     if (storedCategoryIds !== undefined) {
       setValue(storedCategoryIds)
@@ -114,7 +119,6 @@ onMounted(() => {
       selectedCategories.value = categories.value.filter((category) =>
         storedCategoryIds.includes(category.id)
       )
-
     }
   }
 })
