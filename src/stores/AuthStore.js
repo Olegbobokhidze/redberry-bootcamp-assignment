@@ -3,13 +3,23 @@ import { defineStore } from 'pinia'
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false,
-    user: null
+    user: null,
+    loading: false
   }),
   actions: {
-    login({ email }) {
-      this.isAuthenticated = true
-      this.user = email
-      this.saveToLocalStorage()
+    async login({ email }) {
+      try {
+        this.loading = true
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+
+        this.isAuthenticated = true
+        this.user = email
+        this.saveToLocalStorage()
+      } catch (error) {
+        console.error('Login failed:', error)
+      } finally {
+        this.loading = false
+      }
     },
     logout() {
       this.isAuthenticated = false

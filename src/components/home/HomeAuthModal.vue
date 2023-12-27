@@ -12,8 +12,11 @@
         >
           <IconRemove />
         </div>
-        <div class="w-full h-full" v-if="!authStore.isAuthenticated"><AuthForm /></div>
-        <div class="w-full h-full" v-if="authStore.isAuthenticated"><AuthSuccess /></div>
+        <div class="w-full h-full" v-if="!authStore.isAuthenticated && !authStore.loading">
+          <AuthForm />
+        </div>
+        <LoadingSpinner v-if="authStore.loading" />
+        <div class="w- ull h-full" v-if="authStore.isAuthenticated"><AuthSuccess /></div>
       </div>
     </div>
   </div>
@@ -25,6 +28,7 @@ import { useModalStore } from '@/stores/ModalStore'
 import { useAuthStore } from '@/stores/AuthStore'
 import AuthForm from './homeAuthForm/AuthForm.vue'
 import AuthSuccess from './homeAuthForm/AuthSuccess.vue'
+import LoadingSpinner from '../shared/LoadingSpinner.vue'
 export default {
   props: {
     isModalOpen: Boolean,
@@ -41,6 +45,6 @@ export default {
       modalStore
     }
   },
-  components: { AuthForm, AuthSuccess, IconRemove }
+  components: { AuthForm, AuthSuccess, IconRemove, LoadingSpinner }
 }
 </script>

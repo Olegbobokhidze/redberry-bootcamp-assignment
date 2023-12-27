@@ -1,4 +1,3 @@
-import { useModalStore } from '@/stores/ModalStore';
 <template>
   <div class="flex items-center flex-col justify-center mt-[64px] mx-[24px] mb-[40px]">
     <div class="bg-[#14D81C] w-[53.33px] h-[53.33px] rounded-[50%] flex items-center justify-center mb-[16px]">
