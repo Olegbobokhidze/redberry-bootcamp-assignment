@@ -10,17 +10,23 @@
         'rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F]',
         'focus:outline-none focus:border-[#5D37F3] focus:bg-[#F7F7FF]',
         {
-          'border-gray-300': value === '',
-          'border-green-500': !isInvalid && minLengthRule && wordCountRule && englishOnlyRule,
+          'border-gray-300': value === '' || value === undefined,
+          'border-green-500':
+            value !== '' &&
+            value !== undefined &&
+            !isInvalid &&
+            minLengthRule &&
+            wordCountRule &&
+            georgianOnlyRule,
           'border-red-500 bg-[#FAF2F3]':
-            (!minLengthRule || !wordCountRule || !englishOnlyRule || isInvalid) && value !== ''
+            (!minLengthRule || !wordCountRule || !georgianOnlyRule || isInvalid) && value !== ''
         }
       ]"
       @blur="wasTouched = true"
     />
     <p :class="minLengthClass">{{ minLengthMessage }}</p>
     <p :class="wordCountClass">{{ wordCountMessage }}</p>
-    <p :class="englishOnlyClass">{{ englishOnlyMessage }}</p>
+    <p :class="georgianOnlyClass">{{ georgianOnlyMessage }}</p>
   </div>
 </template>
 
@@ -63,7 +69,7 @@ const wordCountRule = computed(
     value.value === '' ||
     value.value === undefined
 )
-const englishOnlyRule = computed(() => /^[A-Za-z\s]*$/.test(value.value || ''))
+const georgianOnlyRule = computed(() => /^[ა-ჰ\s]*$/.test(value.value || ''));
 
 const minLengthClass = computed(() => ({
   'text-gray-500': value.value === undefined || value.value === '',
@@ -77,14 +83,14 @@ const wordCountClass = computed(() => ({
   'text-green-500': wordCountRule.value && value.value !== undefined && value.value !== ''
 }))
 
-const englishOnlyClass = computed(() => ({
+const georgianOnlyClass = computed(() => ({
   'text-gray-500': value.value === undefined || value.value === '',
-  'text-red-500': !englishOnlyRule.value && wasTouched,
-  'text-green-500': englishOnlyRule.value && value.value !== undefined && value.value !== ''
+  'text-red-500': !georgianOnlyRule.value && wasTouched,
+  'text-green-500': georgianOnlyRule.value && value.value !== undefined && value.value !== ''
 }))
 
 // Messages to display based on validation
 const minLengthMessage = computed(() => '• მინიმუმ 4 სიმბოლო')
 const wordCountMessage = computed(() => '• მინიმუმ 2 სიტყვა')
-const englishOnlyMessage = computed(() => '• მხოლოდ ქართული ასოები')
+const georgianOnlyMessage = computed(() => '• მხოლოდ ქართული ასოები')
 </script>

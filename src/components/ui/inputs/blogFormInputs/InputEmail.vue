@@ -9,9 +9,10 @@
       :class="[
         'rounded-xl w-[288px] h-[44px] focus:bg-[#F7F7FF] border px-4 py-2 text-[#1A1A1F] outline-none focus:border-purple-500',
         {
-          'border-gray-300': value === '',
-          'border-green-500': !isInvalid && endsWithRedberryRule,
-          'border-red-500 bg-[#FAF2F3]': !endsWithRedberryRule && value !== ''
+          'border-gray-300': value === '' || value === undefined,
+          'border-green-500':
+            value !== '' && value !== undefined && !isInvalid && endsWithRedberryRule,
+          'border-red-500 bg-[#FAF2F3]': !endsWithRedberryRule && value !== '' && value !== undefined
         }
       ]"
       @blur="wasTouched = true"
@@ -26,7 +27,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useField } from 'vee-validate'
-import IconError from '@/components/icons/IconError.vue';
+import IconError from '@/components/icons/IconError.vue'
 
 const props = defineProps({
   name: String,
@@ -54,13 +55,13 @@ onMounted(() => {
   }
 })
 const endsWithRedberryRule = computed(() => {
-  if (value.value !== undefined) {
-    return value.value.endsWith('@redberry.ge') || value.value === ''
+  if (value.value !== undefined && value.value !== '') {
+    return value.value.endsWith('@redberry.ge')
   }
   return false
 })
 
-const showValidationMessage = computed(() => wasTouched.value && !endsWithRedberryRule.value)
+const showValidationMessage = computed(() => wasTouched.value && !endsWithRedberryRule.value && value.value !== '')
 const validationMessage = computed(() => {
   return endsWithRedberryRule.value ? '' : 'უნდა მთავრდებოდეს @redberry.ge'
 })
