@@ -10,8 +10,8 @@
         'rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F]',
         'focus:outline-none focus:border-[#5D37F3] focus:bg-[#F7F7FF]',
         {
-          'border-gray-300': value === '',
-          'border-green-500': !isInvalid && minLengthRule,
+          'border-gray-300': value === '' || value === undefined,
+          'border-green-500': value !== '' && value !== undefined && !isInvalid && minLengthRule,
           'border-red-500 bg-[#FAF2F3]': !minLengthRule && value !== ''
         }
       ]"
