@@ -9,16 +9,17 @@ import InputEmail from '../ui/inputs/blogFormInputs/InputEmail.vue'
 import InputImage from '../ui/inputs/blogFormInputs/InputImage.vue'
 import { validationSchema } from './validationSchema/blogFormSchema.js'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
-const { values, defineField, handleSubmit } = useForm({
+import { postBlog } from '@/services/api'
+const { values, defineField, handleSubmit, resetForm } = useForm({
   validationSchema
 })
 const [email, emailProps] = defineField('email')
 const [description, descriptionProps] = defineField('description')
 const [title, titleProps] = defineField('title')
 const [author, authorProps] = defineField('author')
-const [date, dateProps] = defineField('date')
+const [date, dateProps] = defineField('publish_date')
 const [image, imageProps] = defineField('image')
-const [category, categoryProps] = defineField('category')
+const [category, categoryProps] = defineField('categories')
 const localStorageKey = 'blogFormData'
 const isDataLoaded = ref(false)
 
@@ -42,8 +43,11 @@ onBeforeUnmount(() => {
 
 console.log(localStorage.getItem(localStorageKey))
 console.log(values)
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(async (values) => {
   console.log(values)
+  const result = await postBlog(values)
+  console.log(result)
+  resetForm()
 })
 </script>
 
@@ -63,10 +67,15 @@ const onSubmit = handleSubmit((values) => {
         placeholder="შეიყვანეთ აღწერა"
       />
       <div class="flex gap-6">
-        <InputDate name="date" type="date" title="* თარიღი" placeholder="შეიყვანეთ თარიღი" />
+        <InputDate
+          name="publish_date"
+          type="date"
+          title="* თარიღი"
+          placeholder="შეიყვანეთ თარიღი"
+        />
         <InputCategory
-          name="category"
-          type="category"
+          name="categories"
+          type="categories"
           title="* კატეგორია"
           placeholder="შეიყვანეთ კატეგორია"
         />

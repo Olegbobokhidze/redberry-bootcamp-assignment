@@ -9,7 +9,12 @@
       :class="[
         'rounded-xl border w-[288px] h-[44px] px-4 py-2 text-[#1A1A1F]',
         'focus:outline-none focus:border-[#5D37F3] focus:bg-[#F7F7FF]',
-        { 'border-gray-300': !isInvalid, 'border-red-500 bg-[#FAF2F3]': isInvalid && wasTouched }
+        {
+          'border-gray-300': value === '',
+          'border-green-500': !isInvalid && minLengthRule && wordCountRule && englishOnlyRule,
+          'border-red-500 bg-[#FAF2F3]':
+            (!minLengthRule || !wordCountRule || !englishOnlyRule || isInvalid) && value !== ''
+        }
       ]"
       @blur="wasTouched = true"
     />
@@ -46,7 +51,7 @@ onMounted(() => {
     }
   }
 })
-
+console.log(value.value)
 const isInvalid = computed(() => errorMessage.value !== undefined)
 
 const minLengthRule = computed(
@@ -61,18 +66,21 @@ const wordCountRule = computed(
 const englishOnlyRule = computed(() => /^[A-Za-z\s]*$/.test(value.value || ''))
 
 const minLengthClass = computed(() => ({
-  'text-gray-500': minLengthRule.value,
-  'text-red-500': !minLengthRule.value && wasTouched
+  'text-gray-500': value.value === undefined || value.value === '',
+  'text-red-500': !minLengthRule.value && wasTouched,
+  'text-green-500': minLengthRule.value && value.value !== undefined && value.value !== ''
 }))
 
 const wordCountClass = computed(() => ({
-  'text-gray-500': wordCountRule.value,
-  'text-red-500': !wordCountRule.value && wasTouched
+  'text-gray-500': value.value === undefined || value.value === '',
+  'text-red-500': !wordCountRule.value && wasTouched,
+  'text-green-500': wordCountRule.value && value.value !== undefined && value.value !== ''
 }))
 
 const englishOnlyClass = computed(() => ({
-  'text-gray-500': englishOnlyRule.value,
-  'text-red-500': !englishOnlyRule.value && wasTouched
+  'text-gray-500': value.value === undefined || value.value === '',
+  'text-red-500': !englishOnlyRule.value && wasTouched,
+  'text-green-500': englishOnlyRule.value && value.value !== undefined && value.value !== ''
 }))
 
 // Messages to display based on validation

@@ -1,11 +1,11 @@
 <template>
   <div
-    v-if="imageValue"
+    v-if="imageFile"
     class="bg-[#E4E3EB] w-[600px] h-[56px] border rounded-xl flex items-center justify-between p-4"
   >
     <div class="flex gap-3 items-center justify-center">
       <IconImageAdded />
-      <p>BlogImg.png</p>
+      <p>{{ imageFile.name }}</p>
     </div>
     <div
       @click="deleteImg"
@@ -20,7 +20,9 @@
     @dragover.prevent="dragOver"
     @dragleave.prevent="dragLeave"
     @drop.prevent="handleDrop"
-    class="p-4 border border-dashed cursor-pointer bg-[#F4F3FF] rounded-xl border-[#85858D] flex justify-center items-center w-[600px] h-[180px]"
+    :class="[
+      'p-4 border border-dashed  cursor-pointer bg-[#F4F3FF] rounded-xl border-[#85858D] flex justify-center items-center w-[600px] h-[180px]'
+    ]"
   >
     <div class="text-center flex items-center flex-col">
       <IconImageAdd class="self-center" />
@@ -45,8 +47,9 @@ export default {
     name: String
   },
   setup(props) {
-    const { value: imageValue, setValue} = useField(props.name)
+    const { value: imageFile, setValue } = useField(props.name)
     const isDragOver = ref(false)
+
     onMounted(() => {
       const storedData = localStorage.getItem('blogFormData')
       if (storedData) {
@@ -57,20 +60,21 @@ export default {
         }
       }
     })
+
     const fileInput = ref(null)
+
     const triggerFileInput = () => {
       fileInput.value.click()
     }
+
     const handleImageChange = (event) => {
       const files = event.target.files || event.dataTransfer.files
       if (files.length !== 0) {
-        const fileReader = new FileReader()
-        fileReader.readAsDataURL(files[0])
-        fileReader.onload = (e) => {
-          imageValue.value = e.target.result
-        }
+        const selectedFile = files[0]
+        imageFile.value = selectedFile
       }
     }
+
     const dragOver = () => {
       isDragOver.value = true
     }
@@ -83,11 +87,13 @@ export default {
       isDragOver.value = false
       handleImageChange(event)
     }
+
     const deleteImg = () => {
-      imageValue.value = ''
+      imageFile.value = null
     }
+
     return {
-      imageValue,
+      imageFile,
       fileInput,
       triggerFileInput,
       handleImageChange,
