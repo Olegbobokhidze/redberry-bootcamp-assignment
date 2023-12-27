@@ -43,7 +43,7 @@
     </div>
     <p
       :class="{
-        'text-[#404049] text-[16px] leading-[28px] line-clamp-2': onHomePage,
+        'text-[#404049] text-[16px] leading-[28px] line-clamp-2': onHomePage || type === 'carousel',
         'text-[#404049] text-[16px] leading-[28px]': onBlogPage
       }"
     >
