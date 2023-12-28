@@ -9,9 +9,9 @@
 
 <script>
 import { ref, onMounted, watch } from 'vue'
-import { useBlogStore } from '../../stores/BlogStore.js'
-import { fetchBlogs } from '../../services/api.js'
-import BlogCard from './BlogCard.vue'
+import { useBlogStore } from '@/stores/BlogStore.js'
+import { fetchBlogs } from '@/services/api.js'
+import BlogCard from '@/components/shared/BlogCard.vue'
 import LoadingSpinner from '@/components/shared/LoadingSpinner.vue'
 
 export default {

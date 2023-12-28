@@ -1,7 +1,7 @@
 <script setup>
-import HomeHero from '../components/home/HomeHero.vue'
-import HomeBlogFilter from '../components/home/HomeBlogFilter.vue'
-import BlogList from '@/components/blog/BlogList.vue'
+import HomeHero from '@/components/home/HomeHero.vue'
+import HomeBlogFilter from '@/components/home/HomeBlogFilter.vue'
+import BlogList from '@/components/home/BlogList.vue'
 import HomeAuthModal from '@/components/home/HomeAuthModal.vue'
 </script>
 

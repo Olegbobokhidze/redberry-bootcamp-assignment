@@ -26,7 +26,7 @@
   </div>
 </template>
 <script setup>
-import BlogCard from '@/components/blog/BlogCard.vue' // Assuming you have a BlogCard component
+import BlogCard from '@/components/shared/BlogCard.vue'
 import { ref } from 'vue'
 import IconArrowLeft from '@/components/icons/IconArrowLeft.vue'
 import IconArrowRight from '@/components/icons/IconArrowRight.vue'

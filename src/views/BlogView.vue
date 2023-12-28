@@ -10,13 +10,13 @@
 </template>
 
 <script setup>
-import BlogCard from '@/components/blog/BlogCard.vue'
+import BlogCard from '@/components/shared/BlogCard.vue'
 import LoadingSpinner from '@/components/shared/LoadingSpinner.vue'
 import RouteNavigator from '@/components/shared/RouteNavigator.vue'
 import { fetchBlogs, fetchSingleBlog } from '@/services/api'
 import { ref } from 'vue'
 import { onBeforeRouteUpdate, useRoute } from 'vue-router'
-import RelatedBlogsCarousel from '@/components/blog/carousel/RelatedBlogsCarousel.vue'
+import RelatedBlogsCarousel from '@/components/blog/RelatedBlogsCarousel.vue'
 import { useBlogStore } from '@/stores/BlogStore'
 const route = useRoute()
 const blog = ref({})
