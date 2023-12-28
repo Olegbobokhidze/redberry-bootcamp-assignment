@@ -9,7 +9,6 @@ export const validationSchema = toTypedSchema(
     author: zod
       .string()
       .min(4, { message: 'მინიმუმ 4 სიმბოლო' })
-
       .refine(
         (value) => {
           const words = value.trim().split(' ')
@@ -19,8 +18,8 @@ export const validationSchema = toTypedSchema(
           message: 'მინიმუმ 2 სიტყვა'
         }
       ),
-    publish_date: zod.string(),
+    publish_date: zod.date(),
     categories: zod.array(zod.number()),
-    image: zod.any()
+    image: zod.object().nullable()
   })
 )

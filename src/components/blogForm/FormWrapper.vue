@@ -10,9 +10,10 @@ import InputImage from '../ui/inputs/blogFormInputs/InputImage.vue'
 import { validationSchema } from './validationSchema/blogFormSchema.js'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { postBlog } from '@/services/api'
-const { values, defineField, handleSubmit, resetForm } = useForm({
+const { values, defineField, handleSubmit, resetForm, errors } = useForm({
   validationSchema
 })
+
 const [email, emailProps] = defineField('email')
 const [description, descriptionProps] = defineField('description')
 const [title, titleProps] = defineField('title')
@@ -30,7 +31,9 @@ onMounted(() => {
   }
   isDataLoaded.value = true
 })
-
+const isFormInValid = () => {
+  return Object.keys(errors.value).every((key) => errors.value[key]?.length === 0)
+}
 watch(values, (newValue) => {
   if (isDataLoaded.value) {
     localStorage.setItem(localStorageKey, JSON.stringify(newValue))
@@ -83,6 +86,7 @@ const onSubmit = handleSubmit(async (values) => {
       <InputEmail name="email" type="email" title="* ელ-ფოსტა" placeholder="Example@redberry.ge" />
       <button
         type="button"
+        :disabled="isFormInValid()"
         @click="onSubmit"
         class="enabled:bg-[#5D37F3] enabled:hover:bg-[#512BE7] disabled:bg-[#E4E3EB] self-end mt-[40px] w-[288px] text-white mb-[237px] h-[40px] rounded-lg"
       >
