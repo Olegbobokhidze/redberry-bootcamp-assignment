@@ -18,8 +18,8 @@ export const validationSchema = toTypedSchema(
           message: 'მინიმუმ 2 სიტყვა'
         }
       ),
-    publish_date: zod.date(),
+    publish_date: zod.string(),
     categories: zod.array(zod.number()),
-    image: zod.object().nullable()
+    image: zod.any()
   })
 )

@@ -86,7 +86,6 @@ const onSubmit = handleSubmit(async (values) => {
       <InputEmail name="email" type="email" title="* ელ-ფოსტა" placeholder="Example@redberry.ge" />
       <button
         type="button"
-        :disabled="isFormInValid()"
         @click="onSubmit"
         class="enabled:bg-[#5D37F3] enabled:hover:bg-[#512BE7] disabled:bg-[#E4E3EB] self-end mt-[40px] w-[288px] text-white mb-[237px] h-[40px] rounded-lg"
       >

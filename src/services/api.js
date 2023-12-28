@@ -1,32 +1,9 @@
-import axios from 'axios'
-
-const apiUrl = 'https://api.blog.redberryinternship.ge/api'
-
-// export const getToken = async () => {
-//   try {
-//     const response = await axios.get(`${apiUrl}/token`)
-//     return response.data.token
-//   } catch (error) {
-//     console.error('Error fetching token:', error)
-//     throw error
-//   }
-// }
-const token = 'c6ccf285bfe578ab4976014965972a8dd038d2aecdc2dbd1f8d07dfdab19578d'
-
-export const setAuthToken = async (token) => {
-  try {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-  } catch (error) {
-    console.error('Error setting auth token:', error)
-    throw error
-  }
-}
+import axiosInstance from '@/plugins/axios'
 
 export const fetchCategories = async () => {
   try {
-    // const token = await getToken()
-    setAuthToken(token)
-    const response = await axios.get(`${apiUrl}/categories`)
+    console.log(import.meta.env.VITE_API_BASE_URL)
+    const response = await axiosInstance.get(`/categories`)
     return response.data.data
   } catch (error) {
     console.error('Error:', error)
@@ -36,9 +13,7 @@ export const fetchCategories = async () => {
 
 export const fetchBlogs = async () => {
   try {
-    // const token = await getToken()
-    setAuthToken(token)
-    const response = await axios.get(`${apiUrl}/blogs`)
+    const response = await axiosInstance.get(`/blogs`)
     return response.data.data
   } catch (error) {
     console.error('Error fetching blogs:', error)
@@ -47,9 +22,7 @@ export const fetchBlogs = async () => {
 }
 export const fetchSingleBlog = async (id) => {
   try {
-    // const token = await getToken()
-    setAuthToken(token)
-    const response = await axios.get(`${apiUrl}/blogs/${id}`)
+    const response = await axiosInstance.get(`/blogs/${id}`)
     return response.data
   } catch (error) {
     console.error('Error fetching blogs:', error)
@@ -59,16 +32,14 @@ export const fetchSingleBlog = async (id) => {
 
 export const postBlog = async (blogData) => {
   try {
-    // const token = await getToken()
-    setAuthToken(token)
-    const response = await axios.post(`${apiUrl}/blogs`, blogData, {
+    const response = await axiosInstance.post(`/blogs`, blogData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         accept: 'application/json'
       }
     })
     console.log(response.request)
-    console.log(blogData, "from api")
+    console.log(blogData, 'from api')
     console.log('Response Status:', response.status)
     return response.data
   } catch (error) {
@@ -83,9 +54,7 @@ export const postBlog = async (blogData) => {
 }
 export const authenticateWithEmail = async (email) => {
   try {
-    setAuthToken(token)
-
-    const response = await axios.post(`${apiUrl}/login`, {
+    const response = await axiosInstance.post(`/login`, {
       email: email
     })
 
@@ -93,11 +62,10 @@ export const authenticateWithEmail = async (email) => {
     console.log(response.data)
 
     if (response.status === 204) {
-
       console.log('User logged in successfully')
       console.log(response.data.token)
 
-      return { success: true };
+      return { success: true }
     } else {
       console.error('Unexpected response status:', response.status)
       throw new Error('Unexpected response status')
