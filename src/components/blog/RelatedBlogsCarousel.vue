@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-import CarouselBlog from '@/components/shared/CarouselBlog.vue' // Create this component
+import CarouselBlog from './CarouselBlog.vue' // Create this component
 const props = defineProps(['blogs'])
 </script>
