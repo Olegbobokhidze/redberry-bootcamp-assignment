@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{
-      'flex flex-col w-[408px] gap-6 mt-5': onHomePage,
+      'flex flex-col w-full gap-6 mt-5': onHomePage,
       'flex flex-col w-[720px] gap-6 mt-5': onBlogPage && type !== 'carousel',
       'flex flex-col w-[530px] gap-6 mt-5': onBlogPage && type === 'carousel'
     }"
