@@ -33,9 +33,6 @@ onMounted(() => {
   }
   isDataLoaded.value = true
 })
-const isFormInValid = () => {
-  return Object.keys(errors.value).every((key) => errors.value[key]?.length === 0)
-}
 watch(values, (newValue) => {
   if (isDataLoaded.value) {
     localStorage.setItem(localStorageKey, JSON.stringify(newValue))
@@ -51,6 +48,8 @@ console.log(values)
 const onSubmit = handleSubmit(async (values) => {
   console.log(values)
   const result = await postBlog(values)
+  console.log(result)
+  console.log('Blog post successful!')
   blogFormModalStore.openBlogFormModal()
 })
 </script>
