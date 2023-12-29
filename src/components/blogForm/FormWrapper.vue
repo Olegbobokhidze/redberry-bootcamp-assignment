@@ -11,7 +11,7 @@ import { validationSchema } from './validationSchema/blogFormSchema.js'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { postBlog } from '@/services/api'
 import { useBlogFormModalStore } from '@/stores/BlogFormModalStore'
-const { values, defineField, handleSubmit, resetForm, errors } = useForm({
+const { values, defineField, handleSubmit, resetForm } = useForm({
   validationSchema
 })
 const blogFormModalStore = useBlogFormModalStore()
@@ -38,7 +38,7 @@ watch(values, (newValue) => {
     localStorage.setItem(localStorageKey, JSON.stringify(newValue))
   }
   if (!values.email) {
-    values.email = ' ' 
+    values.email = ' '
   }
 })
 
@@ -49,11 +49,12 @@ onBeforeUnmount(() => {
 console.log(localStorage.getItem(localStorageKey))
 console.log(values)
 const onSubmit = handleSubmit(async (values) => {
-
   const result = await postBlog(values)
   console.log(result)
   console.log('Blog post successful!')
   blogFormModalStore.openBlogFormModal()
+  localStorage.removeItem(localStorageKey)
+  resetForm()
 })
 </script>
 
