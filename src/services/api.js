@@ -14,12 +14,20 @@ export const fetchCategories = async () => {
 export const fetchBlogs = async () => {
   try {
     const response = await axiosInstance.get(`/blogs`)
-    return response.data.data
+    const currentDate = new Date()
+
+    const filteredBlogs = response.data.data.filter((blog) => {
+      const publishDate = new Date(blog.publish_date)
+      return publishDate < currentDate
+    })
+
+    return filteredBlogs
   } catch (error) {
-    console.error('Error fetching blogs:', error)
+    console.error('Error fetching and filtering blogs:', error)
     throw error
   }
 }
+
 export const fetchSingleBlog = async (id) => {
   try {
     const response = await axiosInstance.get(`/blogs/${id}`)
