@@ -32,7 +32,7 @@ export default {
     isModalOpen: Boolean
   },
   setup() {
-    const { values, errors, handleSubmit, setFieldError } = useForm({
+    const { values, errors, handleSubmit } = useForm({
       authValidationSchema
     })
     const showApiErrorMessage = ref(false);

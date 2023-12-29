@@ -1,5 +1,5 @@
 <template>
-  <div v-if="(openedModal = true)">
+  <div v-if="blogFormModalStore.isBlogFormModalOpen">
     <div
       class="fixed w-full h-full flex items-center justify-center bg-black bg-opacity-20 top-0 left-0 text-black"
     >
@@ -12,7 +12,7 @@
           <IconChecked />
         </div>
         <div
-          @click="closeModal"
+          @click="closeModalWithX"
           class="absolute top-[20px] right-[20px] cursor-pointer w-[40px] h-[40px] rounded-[50%] hover:bg-[#F5F4F9] flex items-center justify-center"
         >
           <IconRemove />
@@ -43,10 +43,14 @@ export default {
       closeModal()
       router.push('/')
     }
+    const closeModalWithX = () => {
+      closeModal()
+    }
     return {
-      closeModal,
+      blogFormModalStore,
       openedModal,
-      closeModalPathHome
+      closeModalPathHome,
+      closeModalWithX
     }
   },
   components: { IconRemove, IconChecked }
