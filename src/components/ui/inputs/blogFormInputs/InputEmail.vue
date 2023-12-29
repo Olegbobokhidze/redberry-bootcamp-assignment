@@ -12,7 +12,8 @@
           'border-gray-300': value === '' || value === undefined,
           'border-green-500':
             value !== '' && value !== undefined && !isInvalid && endsWithRedberryRule,
-          'border-red-500 bg-[#FAF2F3]': !endsWithRedberryRule && value !== '' && value !== undefined
+          'border-red-500 bg-[#FAF2F3]':
+            !endsWithRedberryRule && value !== '' && value !== undefined
         }
       ]"
       @blur="wasTouched = true"
@@ -36,7 +37,7 @@ const props = defineProps({
   placeholder: String
 })
 
-const { value, errorMessage, setValue } = useField(props.name)
+const { value, errorMessage, setValue } = useField(props.name, (value = '') => value)
 const wasTouched = ref(false)
 
 const onInput = (event) => {
@@ -45,23 +46,32 @@ const onInput = (event) => {
 
 const isInvalid = computed(() => errorMessage.value !== undefined)
 onMounted(() => {
-  const storedData = localStorage.getItem('blogFormData')
+  const storedData = localStorage.getItem('blogFormData');
   if (storedData) {
-    const formData = JSON.parse(storedData)
-    const email = formData.email
+    const formData = JSON.parse(storedData);
+    const email = formData.email;
     if (email !== undefined) {
-      setValue(email)
+      setValue(email);
+    } else {
+      setValue('');
     }
   }
-})
+});
 const endsWithRedberryRule = computed(() => {
+  if (value.value === '') {
+    setValue(''); 
+    return true; 
+  }
+
   if (value.value !== undefined && value.value !== '') {
     return value.value.endsWith('@redberry.ge')
   }
   return false
 })
 
-const showValidationMessage = computed(() => wasTouched.value && !endsWithRedberryRule.value && value.value !== '')
+const showValidationMessage = computed(
+  () => wasTouched.value && !endsWithRedberryRule.value && value.value !== ''
+)
 const validationMessage = computed(() => {
   return endsWithRedberryRule.value ? '' : 'უნდა მთავრდებოდეს @redberry.ge'
 })

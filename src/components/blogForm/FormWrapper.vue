@@ -37,6 +37,9 @@ watch(values, (newValue) => {
   if (isDataLoaded.value) {
     localStorage.setItem(localStorageKey, JSON.stringify(newValue))
   }
+  if (!values.email) {
+    values.email = ' ' 
+  }
 })
 
 onBeforeUnmount(() => {
@@ -46,7 +49,7 @@ onBeforeUnmount(() => {
 console.log(localStorage.getItem(localStorageKey))
 console.log(values)
 const onSubmit = handleSubmit(async (values) => {
-  console.log(values)
+
   const result = await postBlog(values)
   console.log(result)
   console.log('Blog post successful!')
