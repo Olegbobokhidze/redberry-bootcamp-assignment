@@ -10,9 +10,11 @@ import InputImage from '../ui/inputs/blogFormInputs/InputImage.vue'
 import { validationSchema } from './validationSchema/blogFormSchema.js'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { postBlog } from '@/services/api'
+import { useBlogFormModalStore } from '@/stores/BlogFormModalStore'
 const { values, defineField, handleSubmit, resetForm, errors } = useForm({
   validationSchema
 })
+const blogFormModalStore = useBlogFormModalStore()
 
 const [email, emailProps] = defineField('email')
 const [description, descriptionProps] = defineField('description')
@@ -49,8 +51,7 @@ console.log(values)
 const onSubmit = handleSubmit(async (values) => {
   console.log(values)
   const result = await postBlog(values)
-  console.log(result)
-  resetForm()
+  blogFormModalStore.openBlogFormModal()
 })
 </script>
 
