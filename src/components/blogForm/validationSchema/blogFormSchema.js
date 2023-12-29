@@ -3,7 +3,7 @@ import * as zod from 'zod'
 
 export const validationSchema = toTypedSchema(
   zod.object({
-    email: zod.string().email().endsWith('@redberry.ge'),
+    email: zod.string().email().endsWith('@redberry.ge').or(zod.string()),
     description: zod.string().min(4),
     title: zod.string().min(4),
     author: zod
